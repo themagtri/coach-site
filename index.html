@@ -165,7 +165,7 @@
             background: #1d4ed8;
         }
 
-        /* עיצוב להדפסה ושמירה כ-PDF */
+        /* עיצוב להדפסה / שמירה כ-PDF */
         @media print {
             body {
                 background: white;
@@ -176,16 +176,25 @@
                 padding: 0;
                 max-width: 100%;
             }
-            .form-section, .submit-btn, .clear-btn, canvas {
+            .form-section, .submit-btn, .clear-btn, canvas, .checkbox-group {
                 display: none !important;
             }
             .print-preview-only {
                 display: block !important;
                 margin-bottom: 20px;
-                font-size: 15px;
+                font-size: 14px;
                 border: 1px solid #cbd5e1;
                 padding: 15px;
                 border-radius: 6px;
+                background: #f8fafc;
+            }
+            /* ביטול הגבלה וגלילה כדי שכל הטקסט המשפטי יודפס במלואו */
+            .legal-box {
+                max-height: none !important;
+                overflow-y: visible !important;
+                border: none !important;
+                padding: 0 !important;
+                font-size: 12px !important;
             }
             .print-signature-section {
                 display: block !important;
@@ -221,14 +230,14 @@
             </div>
         </div>
 
-        <!-- מופיע רק בעת שמירה/הדפסה כ-PDF -->
+        <!-- מופיע רק בהדפסה/PDF -->
         <div class="print-preview-only" id="printDetails">
-            <strong>פרטי המתאמן/ת:</strong> <span id="pName"></span><br>
-            <strong>תעודת זהות / דרכון:</strong> <span id="pId"></span><br>
-            <strong>טלפון נייד:</strong> <span id="pPhone"></span>
+            <strong>פרטי המתאמן:</strong> <span id="pName"></span> | 
+            <strong>ת.ז:</strong> <span id="pId"></span> | 
+            <strong>טלפון:</strong> <span id="pPhone"></span>
         </div>
 
-        <div class="legal-box">
+        <div class="legal-box" id="legalBox">
             <h4>תנאי ההסכם וכתב ויתור משפטי (דין ישראלי)</h4>
             <p><strong>1. הצהרת כשירות רפואית:</strong> אני הח"מ מאשר/ת כי נבדקתי על ידי רופא מוסמך טרם תחילת הפעילות וכי נמצאתי כשיר/ה לבצע פעילות גופנית עצימה, לרבות אימוני סבולת, ריצה ורכיבת אופניים.</p>
             <p><strong>2. אופי האימון (מרחוק):</strong> ידוע לי כי שירותי האימון הניתנים על ידי שגיא מגן מבוצעים מרחוק באמצעות פלטפורמת TrainingPeaks, וכי למאמן אין נוכחות פיזית, שליטה או אחריות ישירה על תנאי השטח, מזג האוויר, הציוד או תוואי הדרך שבהם אני בוחר/ת לבצע את האימונים בפועל.</p>
@@ -249,11 +258,11 @@
             <button type="button" class="clear-btn" id="clearBtn">נקה חתימה</button>
         </div>
 
-        <!-- תמונת החתימה שמופיעה ב-PDF -->
+        <!-- תמונת החתימה שתופיע בהדפסה/PDF -->
         <div class="print-signature-section">
             <p><strong>חתימת המתאמן/ת:</strong></p>
-            <img id="printSigImage" style="max-width: 200px; border-bottom: 1px solid #000;" alt="חתימה">
-            <p style="font-size: 12px; color: #64748b; margin-top: 5px;">אושר ונחתם דיגיטלית</p>
+            <img id="printSigImage" style="max-width: 180px; border-bottom: 1px solid #000;" alt="חתימה">
+            <p style="font-size: 11px; color: #64748b; margin-top: 5px;">הוצג ואושר דיגיטלית דרך אתר האימון</p>
         </div>
 
         <button type="submit" class="submit-btn">אישור ושמירה כ-PDF / הדפסה</button>
@@ -313,13 +322,13 @@
             return;
         }
         
-        // עדכון פרטי ההדפסה והחתימה
+        // העברת הנתונים לחלק שמועבר להדפסה
         document.getElementById('pName').innerText = document.getElementById('fullName').value;
         document.getElementById('pId').innerText = document.getElementById('idNumber').value;
         document.getElementById('pPhone').innerText = document.getElementById('phone').value;
         document.getElementById('printSigImage').src = canvas.toDataURL();
 
-        // פתיחת חלון הדפסה/שמירה כ-PDF
+        // פתיחת חלון הדפסה/שמירה כ-PDF (כל הטקסט יופיע במלואו)
         window.print();
     });
 </script>
