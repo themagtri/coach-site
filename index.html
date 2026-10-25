@@ -3,226 +3,326 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>כתב ויתור והסכם אימון - שגיא מגן</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>הסכם אימון מרחוק וכתב ויתור - שגיא מגן</title>
     <style>
-        body {
-            font-family: 'Rubik', sans-serif;
-            background-color: #f8fafc;
-            color: #334155;
+        :root {
+            --primary-color: #1e293b;
+            --accent-color: #2563eb;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #334155;
+            --border-color: #cbd5e1;
         }
 
-        /* Canvas signature styling */
-        #sigCanvas {
-            border: 2px dashed #cbd5e1;
-            background-color: #ffffff;
-            border-radius: 0.5rem;
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            font-size: 24px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 15px;
+        }
+
+        .form-section {
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .form-section h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 18px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .legal-box {
+            max-height: 250px;
+            overflow-y: auto;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        .legal-box h4 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .checkbox-group input {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--accent-color);
+        }
+
+        .signature-container {
+            margin-bottom: 25px;
+        }
+
+        .signature-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        canvas {
+            border: 2px dashed var(--border-color);
+            border-radius: 6px;
+            background: #fff;
             cursor: crosshair;
+            width: 100%;
+            height: 150px;
             touch-action: none;
         }
 
-        /* Print Styles */
+        .clear-btn {
+            background: #e2e8f0;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        .clear-btn:hover {
+            background: #cbd5e1;
+        }
+
+        .submit-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* עיצוב להדפסה ושמירה כ-PDF */
         @media print {
-            .no-print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 0;
+                max-width: 100%;
+            }
+            .form-section, .submit-btn, .clear-btn, canvas {
                 display: none !important;
             }
-            body {
-                background-color: #fff !important;
-                color: #000 !important;
+            .print-preview-only {
+                display: block !important;
+                margin-bottom: 20px;
+                font-size: 15px;
+                border: 1px solid #cbd5e1;
+                padding: 15px;
+                border-radius: 6px;
             }
-            .document-card {
-                box-shadow: none !important;
-                border: none !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                width: 100% !important;
-                max-width: 100% !important;
+            .print-signature-section {
+                display: block !important;
+                margin-top: 30px;
             }
-            @page {
-                margin: 1.5cm;
-            }
+        }
+
+        .print-preview-only, .print-signature-section {
+            display: none;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between antialiased p-4 sm:p-8">
+<body>
 
-    <div class="max-w-3xl mx-auto w-full bg-white rounded-2xl shadow-lg border border-slate-200 p-6 sm:p-10 document-card">
-        
-        <!-- Header -->
-        <div class="text-center border-b-2 border-slate-900 pb-6 mb-6">
-            <h1 class="text-2xl font-bold text-slate-900">הסכם אימון מרחוק וכתב ויתור על תביעות</h1>
-            <p class="text-sm font-semibold text-blue-700 mt-1">מאמן: שגיא מגן | ת.ז. 203773361 | פלטפורמת אימון: TrainingPeaks</p>
+<div class="container">
+    <h1>הסכם אימון מרחוק וכתב ויתור על תביעות</h1>
+    <div class="subtitle">מאמן: שגיא מגן (ת.ז. 203773361) | פלטפורמת אימון: TrainingPeaks</div>
+
+    <form id="waiverForm">
+        <div class="form-section">
+            <h3>פרטי המתאמן/ת</h3>
+            <div class="input-group">
+                <label for="fullName">שם מלא:</label>
+                <input type="text" id="fullName" required placeholder="הכנס שם פרטי ושם משפחה">
+            </div>
+            <div class="input-group">
+                <label for="idNumber">מספר תעודת זהות / דרכון:</label>
+                <input type="text" id="idNumber" required placeholder="9 ספרות">
+            </div>
+            <div class="input-group">
+                <label for="phone">מספר טלפון נייד:</label>
+                <input type="tel" id="phone" required placeholder="050-0000000">
+            </div>
         </div>
 
-        <!-- Form with Automatic Email Submission -->
-        <!-- החלף את your-email@gmail.com בכתובת המייל האמיתית שלך -->
-        <form id="waiverForm" action="https://formsubmit.co/your-email@gmail.com" method="POST" class="space-y-6">
-            
-            <!-- Hidden Settings for FormSubmit -->
-            <input type="hidden" name="_subject" value="התקבל כתב ויתור חתום חדש - שגיא מגן">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_template" value="table">
+        <!-- מופיע רק בעת שמירה/הדפסה כ-PDF -->
+        <div class="print-preview-only" id="printDetails">
+            <strong>פרטי המתאמן/ת:</strong> <span id="pName"></span><br>
+            <strong>תעודת זהות / דרכון:</strong> <span id="pId"></span><br>
+            <strong>טלפון נייד:</strong> <span id="pPhone"></span>
+        </div>
 
-            <!-- Client Info Block -->
-            <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-4">
-                <h3 class="text-base font-bold text-slate-900 border-b pb-2 border-slate-200">פרטי המתאמן/ת</h3>
-                
-                <div>
-                    <label for="fullName" class="block text-xs font-semibold text-slate-700 mb-1">שם מלא *</label>
-                    <input type="text" id="fullName" name="שם_מלא" required placeholder="הכנס שם פרטי ושם משפחה"
-                           class="w-full px-3.5 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm">
-                </div>
+        <div class="legal-box">
+            <h4>תנאי ההסכם וכתב ויתור משפטי (דין ישראלי)</h4>
+            <p><strong>1. הצהרת כשירות רפואית:</strong> אני הח"מ מאשר/ת כי נבדקתי על ידי רופא מוסמך טרם תחילת הפעילות וכי נמצאתי כשיר/ה לבצע פעילות גופנית עצימה, לרבות אימוני סבולת, ריצה ורכיבת אופניים.</p>
+            <p><strong>2. אופי האימון (מרחוק):</strong> ידוע לי כי שירותי האימון הניתנים על ידי שגיא מגן מבוצעים מרחוק באמצעות פלטפורמת TrainingPeaks, וכי למאמן אין נוכחות פיזית, שליטה או אחריות ישירה על תנאי השטח, מזג האוויר, הציוד או תוואי הדרך שבהם אני בוחר/ת לבצע את האימונים בפועל.</p>
+            <p><strong>3. נטילת סיכונים מרצון:</strong> אני מודע/ת לכך שפעילות גופנית עשויה להיות כרוכה בסיכונים טבעיים (לרבות נפילות, פציעות שריר שלד, שחיקה, פציעות טראומה או נזקים גופניים אחרים). אני לוקח/ת על עצמי מרצון מלא את מלוא האחריות הבלעדית לכל תוצאה העלולה להיגרם לי כתוצאה מהשתתפותי בתוכנית האימונים.</p>
+            <p><strong>4. חובת עצירת אימון:</strong> אני מתחייב/ת לגלות אחריות אישית, להקשיב לגופי, לעצור מיד את האימון במקרה של כאב חריג, סחרחורת או מצב רפואי חריג, ולדווח על כך למאמן מיד דרך המערכת.</p>
+            <p><strong>5. פטור מלא מאחריות וויתור על תביעות:</strong> אני פוטר/ת בזאת באופן מוחלט וסופי את המאמן שגיא מגן מכל אחריות משפטית, ישירה או עקיפה, בגין כל נזק גוף, רכוש או הפסד שייגרמו לי עקב או במהלך האימונים. אני מוותר/ת מראש על כל זכות הגשת תביעה או דרישה כספית כלפי המאמן.</p>
+            <p><strong>6. סמכות שיפוט:</strong> על הסכם זה יחולו אך ורק חוקי מדינת ישראל, וכל מחלוקת משפטית הנובעת ממנו תתברר בבתי המשפט המוסמכים בישראל בלבד.</p>
+        </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label for="idNumber" class="block text-xs font-semibold text-slate-700 mb-1">מספר תעודת זהות / דרכון *</label>
-                        <input type="text" id="idNumber" name="תעודת_זהות" required placeholder="9 ספרות"
-                               class="w-full px-3.5 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm">
-                    </div>
-                    <div>
-                        <label for="phone" class="block text-xs font-semibold text-slate-700 mb-1">מספר טלפון נייד *</label>
-                        <input type="tel" id="phone" name="טלפון" required placeholder="050-0000000"
-                               class="w-full px-3.5 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm">
-                    </div>
-                </div>
-            </div>
+        <div class="checkbox-group">
+            <input type="checkbox" id="approval" required>
+            <label for="approval">קראתי בעיון את כתב הוויתור, הבנתי את תוכנו ואני מאשר/ת את כל סעיפיו מרצון חופשי.</label>
+        </div>
 
-            <!-- Legal Clauses Text Box -->
-            <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 max-h-64 overflow-y-auto text-xs text-slate-700 leading-relaxed text-justify space-y-3">
-                <h4 class="font-bold text-slate-900 text-sm border-b pb-1 border-slate-200">תנאי ההסכם וכתב ויתור משפטי (לפי הדין הישראלי)</h4>
-                
-                <p><strong>1. הצהרת כשירות רפואית:</strong> אני הח"מ מאשר/ת כי נבדקתי על ידי רופא מוסמך טרם תחילת הפעילות וכי נמצאתי כשיר/ה לבצע פעילות גופנית עצימה, לרבות אימוני סבולת, ריצה ורכיבת אופניים.</p>
-                
-                <p><strong>2. אופי האימון (מרחוק בלבד):</strong> ידוע לי כי שירותי האימון הניתנים על ידי שגיא מגן מבוצעים מרחוק באמצעות פלטפורמות דיגיטליות (כגון TrainingPeaks), וכי למאמן אין נוכחות פיזית, שליטה או אחריות ישירה על תנאי השטח, מזג האוויר, הציוד, המסלול או תוואי הדרך שבהם אני בוחר/ת לבצע את האימונים בפועל.</p>
-                
-                <p><strong>3. נטילת סיכונים מרצון:</strong> אני מודע/ת לכך שפעילות גופנית וספורט סבולת עשויים להיות כרוכים בסיכונים טבעיים (לרבות נפילות, מעידות, פציעות שריר ושלד, שברי מאמץ, פציעות טראומה או נזקים גופניים אחרים). אני לוקח/ת על עצמי מרצון מלא את מלוא האחריות הבלעדית לכל תוצאה העלולה להיגרם לי כתוצאה מהשתתפותי בתוכנית האימונים.</p>
-                
-                <p><strong>4. חובת עצירת אימון ודיווח:</strong> אני מתחייב/ת לגלות אחריות אישית, להקשיב לגופי, לעצור מיד את האימון במקרה של כאב חריג, סחרחורת, מצוקה נשימתית או כל מצב רפואי חריג, ולדווח על כך למאמן מיד דרך פלטפורמת האימון או בהודעה ישירה.</p>
-                
-                <p><strong>5. פטור מלא מאחריות וויתור סופי על תביעות:</strong> אני פוטר/ת בזאת באופן מוחלט, מלא ובלתי חוזר את המאמן שגיא מגן מכל אחריות משפטית, נזיקית או אזרחית, בגין כל נזק גוף, נזק נפשי, נכות, מוות או נזק לרכוש שייגרמו לי עקב או במהלך האימונים. אני מוותר/ת מראש על כל זכות הגשת תביעה, דרישה כספית או טענה כלפי המאמן.</p>
-                
-                <p><strong>6. סמכות שיפוט בלעדית:</strong> על הסכם זה יחולו אך ורק חוקי מדינת ישראל, וכל מחלוקת משפטית הנובעת ממנו או ממתן השירותים תתברר בבתי המשפט המוסמכים במדינת ישראל בלבד.</p>
-            </div>
+        <div class="signature-container">
+            <label>חתימה דיגיטלית של המתאמן/ת:</label>
+            <canvas id="sigCanvas"></canvas>
+            <button type="button" class="clear-btn" id="clearBtn">נקה חתימה</button>
+        </div>
 
-            <!-- Approval Checkbox -->
-            <div class="flex items-start gap-3 pt-2">
-                <input type="checkbox" id="approval" name="אישור_תנאים" value="מאשר" required
-                       class="mt-1 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer">
-                <label for="approval" class="text-xs font-medium text-slate-800 leading-relaxed cursor-pointer">
-                    אני מאשר/ת כי קראתי בעיון את כתב הוויתור, הבנתי את כל סעיפיו, ואני חותם/ת עליו מרצון חופשי ובדעה צלולה.
-                </label>
-            </div>
+        <!-- תמונת החתימה שמופיעה ב-PDF -->
+        <div class="print-signature-section">
+            <p><strong>חתימת המתאמן/ת:</strong></p>
+            <img id="printSigImage" style="max-width: 200px; border-bottom: 1px solid #000;" alt="חתימה">
+            <p style="font-size: 12px; color: #64748b; margin-top: 5px;">אושר ונחתם דיגיטלית</p>
+        </div>
 
-            <!-- Signature Canvas Section -->
-            <div class="space-y-1">
-                <label class="block text-xs font-semibold text-slate-700">חתימה דיגיטלית של המתאמן/ת *</label>
-                <div class="relative">
-                    <canvas id="sigCanvas" width="600" height="140" class="w-full"></canvas>
-                    <button type="button" id="clearBtn" class="no-print absolute top-2 left-2 text-[11px] bg-slate-200 hover:bg-slate-300 text-slate-700 px-2 py-1 rounded transition">
-                        נקה חתימה
-                    </button>
-                </div>
-                <input type="hidden" id="signatureData" name="חתימה_דיגיטלית">
-                <p class="text-[10px] text-slate-400">חתומי בעזרת העכבר או מגע במסך הנייד</p>
-            </div>
+        <button type="submit" class="submit-btn">אישור ושמירה כ-PDF / הדפסה</button>
+    </form>
+</div>
 
-            <!-- Submit and Print Action Buttons -->
-            <div class="pt-4 space-y-3 no-print">
-                <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition flex items-center justify-center gap-2 text-sm">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                    אשר ושלח טופס למאמן
-                </button>
+<script>
+    const canvas = document.getElementById('sigCanvas');
+    const ctx = canvas.getContext('2d');
+    let isDrawing = false;
 
-                <button type="button" onclick="window.print()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-semibold py-3 px-4 rounded-xl shadow transition flex items-center justify-center gap-2 text-xs">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                    הדפס / שמור כ-PDF
-                </button>
-            </div>
+    function resizeCanvas() {
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
 
-        </form>
-    </div>
+    function getPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+        const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+        return {
+            x: clientX - rect.left,
+            y: clientY - rect.top
+        };
+    }
 
-    <!-- Script Section -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const canvas = document.getElementById('sigCanvas');
-            const ctx = canvas.getContext('2d');
-            const clearBtn = document.getElementById('clearBtn');
-            const waiverForm = document.getElementById('waiverForm');
-            const signatureDataInput = document.getElementById('signatureData');
-            let isDrawing = false;
+    canvas.addEventListener('mousedown', (e) => { isDrawing = true; ctx.beginPath(); const pos = getPos(e); ctx.moveTo(pos.x, pos.y); });
+    canvas.addEventListener('mousemove', (e) => { if (!isDrawing) return; const pos = getPos(e); ctx.lineTo(pos.x, pos.y); ctx.stroke(); });
+    window.addEventListener('mouseup', () => { isDrawing = false; });
 
-            // Handle touch and mouse positions correctly
-            function getPos(e) {
-                const rect = canvas.getBoundingClientRect();
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                return {
-                    x: (clientX - rect.left) * (canvas.width / rect.width),
-                    y: (clientY - rect.top) * (canvas.height / rect.height)
-                };
+    canvas.addEventListener('touchstart', (e) => { isDrawing = true; ctx.beginPath(); const pos = getPos(e); ctx.moveTo(pos.x, pos.y); e.preventDefault(); });
+    canvas.addEventListener('touchmove', (e) => { if (!isDrawing) return; const pos = getPos(e); ctx.lineTo(pos.x, pos.y); ctx.stroke(); e.preventDefault(); });
+    window.addEventListener('touchend', () => { isDrawing = false; });
+
+    document.getElementById('clearBtn').addEventListener('click', () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+
+    document.getElementById('waiverForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // בדיקה שהמתאמן אכן חתם
+        const pixelData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        let isBlank = true;
+        for (let i = 0; i < pixelData.length; i += 4) {
+            if (pixelData[i + 3] !== 0) {
+                isBlank = false;
+                break;
             }
+        }
 
-            function startDrawing(e) {
-                isDrawing = true;
-                const pos = getPos(e);
-                ctx.beginPath();
-                ctx.moveTo(pos.x, pos.y);
-                if (e.type === 'touchstart') e.preventDefault();
-            }
+        if (isBlank) {
+            alert('אנא חתום/י בתיבת החתימה לפני השמירה.');
+            return;
+        }
+        
+        // עדכון פרטי ההדפסה והחתימה
+        document.getElementById('pName').innerText = document.getElementById('fullName').value;
+        document.getElementById('pId').innerText = document.getElementById('idNumber').value;
+        document.getElementById('pPhone').innerText = document.getElementById('phone').value;
+        document.getElementById('printSigImage').src = canvas.toDataURL();
 
-            function draw(e) {
-                if (!isDrawing) return;
-                const pos = getPos(e);
-                ctx.lineWidth = 2.5;
-                ctx.lineCap = 'round';
-                ctx.strokeStyle = '#0f172a';
-                ctx.lineTo(pos.x, pos.y);
-                ctx.stroke();
-                if (e.type === 'touchmove') e.preventDefault();
-            }
+        // פתיחת חלון הדפסה/שמירה כ-PDF
+        window.print();
+    });
+</script>
 
-            function stopDrawing() {
-                isDrawing = false;
-            }
-
-            canvas.addEventListener('mousedown', startDrawing);
-            canvas.addEventListener('mousemove', draw);
-            canvas.addEventListener('mouseup', stopDrawing);
-            canvas.addEventListener('mouseleave', stopDrawing);
-
-            canvas.addEventListener('touchstart', startDrawing, { passive: false });
-            canvas.addEventListener('touchmove', draw, { passive: false });
-            canvas.addEventListener('touchend', stopDrawing);
-
-            clearBtn.addEventListener('click', () => {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-            });
-
-            // Convert canvas drawing to data URL on submit
-            waiverForm.addEventListener('submit', (e) => {
-                const pixelData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-                let isBlank = true;
-                for (let i = 0; i < pixelData.length; i += 4) {
-                    if (pixelData[i + 3] !== 0) {
-                        isBlank = false;
-                        break;
-                    }
-                }
-
-                if (isBlank) {
-                    e.preventDefault();
-                    alert('אנא חתום בתיבת החתימה הדיגיטלית לפני השליחה.');
-                    return;
-                }
-
-                signatureDataInput.value = canvas.toDataURL();
-            });
-        });
-    </script>
 </body>
 </html>
